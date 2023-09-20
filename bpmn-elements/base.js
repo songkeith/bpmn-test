@@ -38,6 +38,8 @@ async function run() {
   const context = new Context(serialize(moddleContext, typeResolver));
 
   const definition = new Definition(context, options);
+  // const a  = definition.getProcesses()[0].context.getActivities()
+  // console.log(a)
   definition.run();
 }
 
