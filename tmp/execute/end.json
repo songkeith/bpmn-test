@@ -1,0 +1,343 @@
+{
+  "name": "first",
+  "state": "idle",
+  "stopped": false,
+  "engineVersion": "17.1.1",
+  "environment": {
+    "settings": {},
+    "variables": {
+      "data": {
+        "inputFromUser": 0
+      }
+    },
+    "output": {
+      "data": {
+        "inputFromUser": 2
+      }
+    }
+  },
+  "definitions": [
+    {
+      "id": "Def",
+      "type": "bpmn:Definitions",
+      "executionId": "Def_d503f5ba77",
+      "stopped": false,
+      "counters": {
+        "completed": 1,
+        "discarded": 0
+      },
+      "environment": {
+        "settings": {},
+        "variables": {
+          "data": {
+            "inputFromUser": 2
+          }
+        },
+        "output": {
+          "data": {
+            "inputFromUser": 2
+          }
+        }
+      },
+      "execution": {
+        "executionId": "Def_d503f5ba77",
+        "stopped": false,
+        "completed": true,
+        "status": "completed",
+        "processes": [
+          {
+            "id": "theProcess",
+            "type": "bpmn:Process",
+            "executionId": "theProcess_fcb427c94c",
+            "environment": {
+              "settings": {},
+              "variables": {
+                "data": {
+                  "inputFromUser": 2
+                },
+                "fields": {
+                  "routingKey": "run.execute",
+                  "exchange": "run",
+                  "consumerTag": "_process-run"
+                },
+                "content": {
+                  "id": "theProcess",
+                  "type": "bpmn:Process",
+                  "executionId": "theProcess_fcb427c94c",
+                  "parent": {
+                    "type": "bpmn:Definitions"
+                  }
+                },
+                "properties": {
+                  "messageId": "smq.mid-ac93329382",
+                  "timestamp": 1693836528308
+                }
+              },
+              "output": {
+                "data": {
+                  "inputFromUser": 2
+                }
+              }
+            },
+            "stopped": false,
+            "counters": {
+              "completed": 1,
+              "discarded": 0
+            },
+            "broker": {
+              "queues": [
+                {
+                  "name": "run-q",
+                  "options": {
+                    "autoDelete": false,
+                    "durable": true
+                  },
+                  "messages": [
+                    {
+                      "fields": {
+                        "routingKey": "run.leave",
+                        "exchange": "run",
+                        "consumerTag": "_process-run"
+                      },
+                      "content": {
+                        "id": "theProcess",
+                        "type": "bpmn:Process",
+                        "executionId": "theProcess_fcb427c94c",
+                        "parent": {
+                          "type": "bpmn:Definitions"
+                        },
+                        "state": "completed",
+                        "output": {
+                          "data": {
+                            "inputFromUser": 2
+                          }
+                        }
+                      },
+                      "properties": {
+                        "messageId": "smq.mid-7d3f4bb1e7",
+                        "timestamp": 1693836528336
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "execution": {
+              "executionId": "theProcess_fcb427c94c",
+              "stopped": false,
+              "completed": true,
+              "status": "completed",
+              "children": [
+                {
+                  "id": "theStart",
+                  "type": "bpmn:StartEvent",
+                  "executionId": "theStart_ac6608b53c",
+                  "counters": {
+                    "taken": 1,
+                    "discarded": 0
+                  },
+                  "execution": {
+                    "completed": true
+                  }
+                },
+                {
+                  "id": "userTask",
+                  "type": "bpmn:UserTask",
+                  "executionId": "userTask_b77b97db5d",
+                  "counters": {
+                    "taken": 1,
+                    "discarded": 0
+                  },
+                  "broker": {
+                    "queues": [
+                      {
+                        "name": "run-q",
+                        "options": {
+                          "autoDelete": false,
+                          "durable": true
+                        },
+                        "messages": [
+                          {
+                            "fields": {
+                              "routingKey": "run.leave",
+                              "exchange": "run",
+                              "consumerTag": "_activity-run"
+                            },
+                            "content": {
+                              "inbound": [
+                                {
+                                  "action": "take",
+                                  "result": true,
+                                  "evaluationId": "theStart_ac6608b53c",
+                                  "id": "flow1",
+                                  "sequenceId": "flow1_take_da1613c9c5",
+                                  "type": "bpmn:SequenceFlow",
+                                  "sourceId": "theStart",
+                                  "targetId": "userTask",
+                                  "isSequenceFlow": true,
+                                  "parent": {
+                                    "id": "theProcess",
+                                    "type": "bpmn:Process",
+                                    "executionId": "theProcess_fcb427c94c"
+                                  }
+                                }
+                              ],
+                              "executionId": "userTask_b77b97db5d",
+                              "id": "userTask",
+                              "type": "bpmn:UserTask",
+                              "parent": {
+                                "id": "theProcess",
+                                "type": "bpmn:Process"
+                              },
+                              "ioSpecification": {
+                                "dataOutputs": [
+                                  {
+                                    "id": "userInput",
+                                    "type": "bpmn:DataOutput",
+                                    "value": 2
+                                  }
+                                ]
+                              },
+                              "state": "completed",
+                              "isRootScope": true,
+                              "output": {
+                                "ioSpecification": {
+                                  "dataOutputs": [
+                                    {
+                                      "id": "userInput",
+                                      "value": 2
+                                    }
+                                  ]
+                                }
+                              },
+                              "outbound": [
+                                {
+                                  "action": "take",
+                                  "result": true,
+                                  "evaluationId": "userTask_b77b97db5d",
+                                  "id": "flow2"
+                                }
+                              ]
+                            },
+                            "properties": {
+                              "correlationId": "userTask_signal_15044104ba",
+                              "messageId": "smq.mid-69ee39e8a2",
+                              "timestamp": 1693836528329
+                            }
+                          },
+                          {
+                            "fields": {
+                              "routingKey": "run.next",
+                              "exchange": "run"
+                            },
+                            "content": {
+                              "inbound": [
+                                {
+                                  "action": "take",
+                                  "result": true,
+                                  "evaluationId": "theStart_ac6608b53c",
+                                  "id": "flow1",
+                                  "sequenceId": "flow1_take_da1613c9c5",
+                                  "type": "bpmn:SequenceFlow",
+                                  "sourceId": "theStart",
+                                  "targetId": "userTask",
+                                  "isSequenceFlow": true,
+                                  "parent": {
+                                    "id": "theProcess",
+                                    "type": "bpmn:Process",
+                                    "executionId": "theProcess_fcb427c94c"
+                                  }
+                                }
+                              ],
+                              "executionId": "userTask_b77b97db5d",
+                              "id": "userTask",
+                              "type": "bpmn:UserTask",
+                              "parent": {
+                                "id": "theProcess",
+                                "type": "bpmn:Process"
+                              },
+                              "ioSpecification": {
+                                "dataOutputs": [
+                                  {
+                                    "id": "userInput",
+                                    "type": "bpmn:DataOutput",
+                                    "value": 2
+                                  }
+                                ]
+                              },
+                              "state": "completed",
+                              "isRootScope": true,
+                              "output": {
+                                "ioSpecification": {
+                                  "dataOutputs": [
+                                    {
+                                      "id": "userInput",
+                                      "value": 2
+                                    }
+                                  ]
+                                }
+                              },
+                              "outbound": [
+                                {
+                                  "action": "take",
+                                  "result": true,
+                                  "evaluationId": "userTask_b77b97db5d",
+                                  "id": "flow2"
+                                }
+                              ]
+                            },
+                            "properties": {
+                              "persistent": false,
+                              "messageId": "smq.mid-e530f3cf10",
+                              "timestamp": 1693836528335
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "execution": {
+                    "completed": true
+                  }
+                },
+                {
+                  "id": "theEnd",
+                  "type": "bpmn:EndEvent",
+                  "executionId": "theEnd_56cc27945c",
+                  "counters": {
+                    "taken": 1,
+                    "discarded": 0
+                  },
+                  "execution": {
+                    "completed": true
+                  }
+                }
+              ],
+              "flows": [
+                {
+                  "id": "flow1",
+                  "type": "bpmn:SequenceFlow",
+                  "counters": {
+                    "looped": 0,
+                    "take": 1,
+                    "discard": 0
+                  }
+                },
+                {
+                  "id": "flow2",
+                  "type": "bpmn:SequenceFlow",
+                  "counters": {
+                    "looped": 0,
+                    "take": 1,
+                    "discard": 0
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "source": "{\"type\":\"bpmn:Definitions\",\"definition\":{\"type\":\"bpmn:Definitions\"},\"activities\":[{\"id\":\"theStart\",\"type\":\"bpmn:StartEvent\",\"parent\":{\"id\":\"theProcess\",\"type\":\"bpmn:Process\"},\"behaviour\":{\"$type\":\"bpmn:StartEvent\",\"id\":\"theStart\"}},{\"id\":\"userTask\",\"type\":\"bpmn:UserTask\",\"parent\":{\"id\":\"theProcess\",\"type\":\"bpmn:Process\"},\"behaviour\":{\"$type\":\"bpmn:UserTask\",\"id\":\"userTask\",\"ioSpecification\":{\"id\":\"inputSpec\",\"type\":\"bpmn:InputOutputSpecification\",\"behaviour\":{\"dataOutputs\":[{\"$type\":\"bpmn:DataOutput\",\"id\":\"userInput\",\"type\":\"bpmn:DataOutput\",\"behaviour\":{\"association\":{\"source\":{\"element\":{\"$type\":\"bpmn:DataOutputAssociation\",\"id\":\"associatedWith\"},\"property\":\"bpmn:sourceRef\",\"id\":\"userInput\"},\"target\":{\"element\":{\"$type\":\"bpmn:DataOutputAssociation\",\"id\":\"associatedWith\"},\"property\":\"bpmn:targetRef\",\"id\":\"inputFromUserRef\",\"dataObject\":{\"$type\":\"bpmn:DataObject\",\"id\":\"inputFromUser\"}}}}}]}},\"dataOutputAssociations\":[{\"id\":\"associatedWith\",\"type\":\"bpmn:DataOutputAssociation\",\"behaviour\":{\"$type\":\"bpmn:DataOutputAssociation\",\"id\":\"associatedWith\",\"sourceRef\":{\"id\":\"userInput\",\"type\":\"bpmn:DataOutput\"},\"targetRef\":{\"id\":\"inputFromUserRef\",\"type\":\"bpmn:DataObjectReference\"}}}]}},{\"id\":\"theEnd\",\"type\":\"bpmn:EndEvent\",\"parent\":{\"id\":\"theProcess\",\"type\":\"bpmn:Process\"},\"behaviour\":{\"$type\":\"bpmn:EndEvent\",\"id\":\"theEnd\"}}],\"associations\":[],\"dataObjects\":[{\"id\":\"inputFromUser\",\"type\":\"bpmn:DataObject\",\"parent\":{\"id\":\"theProcess\",\"type\":\"bpmn:Process\"},\"references\":[{\"id\":\"inputFromUserRef\",\"type\":\"bpmn:DataObjectReference\",\"behaviour\":{\"$type\":\"bpmn:DataObjectReference\",\"id\":\"inputFromUserRef\"}}],\"behaviour\":{\"$type\":\"bpmn:DataObject\",\"id\":\"inputFromUser\"}}],\"dataStores\":[],\"messageFlows\":[],\"participants\":[],\"processes\":[{\"id\":\"theProcess\",\"type\":\"bpmn:Process\",\"parent\":{\"type\":\"bpmn:Definitions\"},\"behaviour\":{\"$type\":\"bpmn:Process\",\"id\":\"theProcess\",\"isExecutable\":true,\"flowElements\":[{\"$type\":\"bpmn:DataObjectReference\",\"id\":\"inputFromUserRef\"},{\"$type\":\"bpmn:DataObject\",\"id\":\"inputFromUser\"},{\"$type\":\"bpmn:StartEvent\",\"id\":\"theStart\"},{\"$type\":\"bpmn:UserTask\",\"id\":\"userTask\",\"ioSpecification\":{\"$type\":\"bpmn:InputOutputSpecification\",\"id\":\"inputSpec\",\"dataOutputs\":[{\"$type\":\"bpmn:DataOutput\",\"id\":\"userInput\"}]},\"dataOutputAssociations\":[{\"$type\":\"bpmn:DataOutputAssociation\",\"id\":\"associatedWith\"}]},{\"$type\":\"bpmn:EndEvent\",\"id\":\"theEnd\"},{\"$type\":\"bpmn:SequenceFlow\",\"id\":\"flow1\"},{\"$type\":\"bpmn:SequenceFlow\",\"id\":\"flow2\"}]}}],\"sequenceFlows\":[{\"id\":\"flow1\",\"type\":\"bpmn:SequenceFlow\",\"parent\":{\"id\":\"theProcess\",\"type\":\"bpmn:Process\"},\"targetId\":\"userTask\",\"sourceId\":\"theStart\",\"behaviour\":{\"$type\":\"bpmn:SequenceFlow\",\"id\":\"flow1\"}},{\"id\":\"flow2\",\"type\":\"bpmn:SequenceFlow\",\"parent\":{\"id\":\"theProcess\",\"type\":\"bpmn:Process\"},\"targetId\":\"theEnd\",\"sourceId\":\"userTask\",\"behaviour\":{\"$type\":\"bpmn:SequenceFlow\",\"id\":\"flow2\"}}],\"scripts\":[],\"timers\":[]}"
+    }
+  ]
+}
